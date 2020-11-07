@@ -1,0 +1,9 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}Main Assignment
+${licensePrefix}Author: Claudia Gonzalez
+${licensePrefix}Student Number: 2020085
+<#if licenseLast??>
+${licenseLast}
+</#if>

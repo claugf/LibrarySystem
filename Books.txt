@@ -1,0 +1,85 @@
+BOOKID;TITLE;AUTHOR
+1000;Pride and Prejudice;Jane Austen 
+1001;The Masque of the Red Death;Edgar Allan Poe 
+1002;The Scarlet Letter;Nathaniel Hawthorne 
+1003;Beowulf: An Anglo-Saxon Epic Poem;Anonymous
+1004;Alice's Adventures in Wonderland;Lewis Carroll 
+1005;Et dukkehjem. English;Henrik Ibsen
+1006;The Yellow Wallpaper;Charlotte Perkins Gilman 
+1007;Anthem;Ayn Rand 
+1008;The Legend of Sleepy Hollow;Washington Irving 
+1009;A Modest Proposal;Jonathan Swift 
+1010;Metamorphosis;Franz Kafka 
+1011;The Turn of the Screw;HenrJames 
+1012;A Tale of Two Cities;Charles Dickens 
+1013;The Adventures of Sherlock Holmes;Arthur Conan Doyle 
+1014;A Christmas Carol in Prose;Charles Dickens 
+1015;Dracula;Bram Stoker 
+1016;Narrative of the Life of Frederick Douglass;Frederick Douglass 
+1017;Il Principe. English;Niccolo Machiavelli 
+1018;The Souls of Black Folk;W. E. B. Du Bois 
+1019;The Awakening, and Selected Short Stories;Kate Chopin 
+1020;A Trivial Comedy for Serious People;Oscar Wilde 
+1021;The Slang Dictionary;John Camden Hotten 
+1022;The Adventures of Tom Sawyer;Mark Twain 
+1023;The Picture of Dorian Gray;Oscar Wilde 
+1024;Grimms' Fairy Tales;Jacob  Grimm and Wilhelm Grimm 
+1025;Peter Pan;J. M. Barrie 
+1026;Treasure Island;Robert Louis Stevenson 
+1027;The Iliad;Homer 
+1028;A History of the Philippines;David P. Barrows 
+1029;Leviathan;Thomas Hobes
+1030;The Call of the Wild;Jack London 
+1031;Great Expectations;Charles Dickens 
+1032;The Hound of the Baskervilles;Arthur Conan Doyle 
+1033;Heart of Darkness;Joseph Conrad 
+1034;Dubliners;James Joyce 
+1035;Emma;Jane Austen 
+1036;Little Women;Louisa MaAlcott 
+1037;Siddhartha;Hermann Hesse 
+1038;War and Peace;Graf Leo Tolstoy
+1039;Frankenstein, Or, The Modern Prometheus;MarWollstonecraft Shelle
+1040;Ulysses;James Joyce 
+1041;Anne of Green Gables;L. M. Montgomer
+1042;The Count of Monte Cristo, Illustrated;Alexandre Dumas 
+1043;The Prophet;Kahlil Gibran
+1044;The Wonderful Wizard of Oz;L. Frank Baum 
+1045;Tractatus Logico-Philosophicus;Ludwig Wittgenstein 
+1046;The Odyssey;Homer 
+1047;Prestuplenie i nakazanie. English;Fyodor Dostoyevsk
+1048;The War of the Worlds;H. G. Wells 
+1049;Pygmalion;Bernard Shaw 
+1050;The Philippine Islands;Anonymous
+1051;The Secret Garden;Frances Hodgson Burnett 
+1052;Wuthering Heights;EmilBronte
+1053;The Happy Prince, and Other Tales;Oscar Wilde 
+1054;The Jungle;Upton Sinclair 
+1055;Don Quixote;Miguel de Cervantes Saavedra 
+1056;A Study in Scarlet;Arthur Conan Doyle 
+1057;Autobiography of Benjamin Franklin;Benjamin Franklin 
+1058;Second Treatise of Government;John Locke 
+1059;The Works of Edgar Allan Poe, Volume 2;Edgar Allan Poe 
+1060;Le jardin des supplices;Octave Mirbeau
+1061;The Kama Sutra of Vatsyayana;Vatsyayana 
+1062;Essays of Michel de Montaigne, Complete;Michel de Montaigne 
+1063;The Brothers Karamazov;Fyodor Dostoyevsk
+1064;Candide;Voltaire 
+1065;The Cask of Amontillado;Edgar Allan Poe 
+1066;Divine Comedy, Longfellow's Translation, Hell;Dante Alighieri 
+1067;Les Miserables;Victor Hugo 
+1068;The Confessions of St. Augustine;Bishop of Hippo Saint Augustine 
+1069;The Jungle Book;Rudyard Kipling 
+1070;Beyond Good and Evil;Friedrich Wilhelm Nietzsche 
+1071;Three Men in a Boat (To Say Nothing of the Dog);Jerome K. Jerome 
+1072;Common Sense;Thomas Paine 
+1073;The Time Machine;H. G. Wells 
+1074;A Journal of the Plague Year;Daniel Defoe 
+1075;The Tragical History of Doctor Faustus;Christopher Marlowe 
+1076;The Monkey's Paw;W. W. Jacobs
+1077;Also sprach Zarathustra. English;Friedrich Wilhelm Nietzsche 
+1078;On Liberty;John Stuart Mill 
+1079;Oliver Twist;Charles Dickens 
+1080;The Devil's Dictionary;Ambrose Bierce 
+1081;David Copperfield;Charles Dickens 
+1082;Ethan Frome;Edith Wharton 
+1083;The Mysterious Affair at Styles;Agatha Christie 
