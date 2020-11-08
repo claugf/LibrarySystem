@@ -9,6 +9,8 @@ package library_system_2020085;
 import java.util.Scanner;
 import ls.controller.BookController;
 import ls.controller.ReaderController;
+import ls.controller.BorrowingController;
+import ls.utils.tools;
 
 /**
  *
@@ -19,12 +21,13 @@ public class UserInterface {
     //  Declaring aour controllers
     private BookController books;
     private ReaderController readers;
-    public static String separator = "-----------------------------------------------------------------------------------";
+    private BorrowingController borrowings;
 
     public UserInterface() {
         //  Initializing controllers
         books = new BookController();
         readers = new ReaderController();
+        borrowings = new BorrowingController();
 
         //  Loading data
         books.loadBooks();
@@ -33,16 +36,15 @@ public class UserInterface {
         // Initializing user interface
         welcome();
         menu();
-
     }
 
     /*
      *  Method for print welcome message
      */
     public static void welcome() {
-        System.out.println(separator);
+        System.out.println(tools.separator);
         System.out.println("*                                 LIBRARY SYSTEM                                  *");
-        System.out.println(separator);
+        System.out.println(tools.separator);
 
     }
 
@@ -67,7 +69,7 @@ public class UserInterface {
             System.out.println("3 - Search a reader");
             System.out.println("4 - List all readers");
             System.out.println("5 - Register a borrowing");
-            System.out.println("6 - Register a returning");
+            System.out.println("6 - Register a return");
             System.out.println("7 - Borrowed books by specific Reader");
             System.out.println("0 - Exit");
             System.out.println();
@@ -91,10 +93,13 @@ public class UserInterface {
                     listReaders();
                     break;
                 case "5":
+                    addBorrowing();
                     break;
                 case "6":
+                    registerReturn();
                     break;
                 case "7":
+                    listBorrowingsbyReader();
                     break;
                 case "0":
                     keepgoing = false;
@@ -128,13 +133,13 @@ public class UserInterface {
             switch (opt) {
                 case "1":
                     //  Asking an input to the user
-                    target = getString(sc, "Please insert Book's Title");
+                    target = tools.getString(sc, "Please insert Book's Title");
                     books.searchBooks(true, target);
                     keepgoing = false;
                     break;
                 case "2":
                     //  Asking an input to the user
-                    target = getString(sc, "Please insert Book's Author");
+                    target = tools.getString(sc, "Please insert Book's Author");
                     books.searchBooks(false, target);
                     keepgoing = false;
                     break;
@@ -207,19 +212,19 @@ public class UserInterface {
             switch (opt) {
                 case "1":
                     //  Asking an input to the user
-                    target = getString(sc, "Please insert Reader's Id");
+                    target = tools.getString(sc, "Please insert Reader's Id");
                     readers.searchReaders(1, target);
                     keepgoing = false;
                     break;
                 case "2":
                     //  Asking an input to the user
-                    target = getString(sc, "Please insert Reader's Name");
+                    target = tools.getString(sc, "Please insert Reader's Name");
                     readers.searchReaders(2, target);
                     keepgoing = false;
                     break;
                 case "3":
                     //  Asking an input to the user
-                    target = getString(sc, "Please insert Reader's Surname");
+                    target = tools.getString(sc, "Please insert Reader's Surname");
                     readers.searchReaders(3, target);
                     keepgoing = false;
                     break;
@@ -232,7 +237,7 @@ public class UserInterface {
             }
         }
     }
-    
+
     /*
      *  Opt 4. Method for display all the readers
      */
@@ -276,23 +281,164 @@ public class UserInterface {
     }
 
     /*
-     *  Method for valid input
+     *  Opt 5. Method for display all borrowings
      */
-    public static String getString(Scanner sc, String prompt) {
-        String seq = "";
-        boolean isValid = false;
+    private void addBorrowing() {
+        String[] reader;
+        String[] book;
+        Scanner sc = new Scanner(System.in);// Initializing scanner
+        String opt, readerId, readerName, bookId, bookTitle;
 
-        while (isValid == false) {
-            System.out.println(prompt);
-            seq = sc.nextLine();
+        //  Asking for a valid reader to the user
+        reader = readers.askToUserValidReader();
 
-            if (!seq.equals("")) {
-                isValid = true;
-            } else {
-                System.out.println("Error! This entry is required. Try again.");
+        //  If readerId is valid, we proceed to ask for bookId
+        if (!reader[0].equals("")) {
+            //  Set readerId 
+            readerId = reader[0];
+            //  Set readerName to show it further
+            readerName = reader[1];
+
+            //  Asking for a valid book to the user
+            book = books.askToUserValidBook();
+
+            //  If bookId is valid, we proceed to add borrowing
+            if (!book[0].equals("")) {
+                //  Set bookId 
+                bookId = book[0];
+                //  Set bookTitle to show it further
+                bookTitle = book[1];
+
+                //  Now we ask to the user if he wants to add the borrowing
+                System.out.println();
+                System.out.println("Would you like to add the following borrowing?");
+                System.out.println(readerId + " " + readerName + " - " + bookId + " " + bookTitle);
+                System.out.println();
+                System.out.println("1 - Confirm, Add Borrowing");
+                System.out.println("0 - Cancel, Back to General Menu");
+
+                //  It will keep asking to the user for a valid input
+                Boolean keepgoing = true;
+                while (keepgoing) {
+                    //  Asking an input to the user
+                    opt = sc.nextLine();
+                    System.out.println();
+                    if (opt.equals("1")) {
+                        borrowings.addBorrowing(readerId, bookId);
+                        System.out.println("Borrowing added successfully to our database!");
+                        keepgoing = false;
+                    } else {
+                        if (opt.equals("0")) {
+                            keepgoing = false;
+                        } else {
+                            System.out.println("Please select an option from the menu!");
+                        }
+                    }
+                }
             }
         }
-        return seq;
     }
 
+    /*
+     *  Opt 6. Method for register a return of a borrowed book
+     */
+    private void registerReturn() {
+        String[] borrowing;
+        String[] reader;
+        Scanner sc = new Scanner(System.in);// Initializing scanner
+        String opt, borrowingId, readerId, readerName, bookId, bookTitle;
+
+        //  Asking for a valid reader to the user
+        reader = readers.askToUserValidReader();
+
+        //  If readerId is valid, we proceed to display borrowings by reader
+        if (!reader[0].equals("")) {
+            //  Set readerId 
+            readerId = reader[0];
+
+            //  Display all the borrowings of the reader
+            if (borrowings.displayBorrowingsByReader(readerId, true)) {
+
+                //  Asking for a valid borrowing to the user
+                borrowing = borrowings.validateBorrowing();
+
+                //  If borrowingId is valid, we proceed to confirm
+                if (!borrowing[0].equals("")) {
+
+                    //  Getting borrowing data
+                    borrowingId = borrowing[0];
+                    readerName = borrowing[2];
+                    bookId = borrowing[3];
+                    bookTitle = borrowing[4];
+
+                    //  Now we ask to the user if he wants to add the borrowing
+                    System.out.println();
+                    System.out.println("Would you like to proceed to return this book?");
+                    System.out.println("Reader: " + readerId + " " + readerName + " - Book: " + bookId + " " + bookTitle);
+                    System.out.println();
+                    System.out.println("1 - Confirm, Return Book");
+                    System.out.println("0 - Cancel, Back to General Menu");
+
+                    //  It will keep asking to the user for a valid input
+                    Boolean keepgoing = true;
+                    while (keepgoing) {
+                        //  Asking an input to the user
+                        opt = sc.nextLine();
+                        System.out.println();
+                        if (opt.equals("1")) {
+                            borrowings.returnBorrowing(borrowingId);
+                            keepgoing = false;
+                        } else {
+                            if (opt.equals("0")) {
+                                keepgoing = false;
+                            } else {
+                                System.out.println("Please select an option from the menu!");
+                            }
+                        }
+                    }
+                }
+            } else {
+                System.out.println("No borrowings found for this reader");
+            }
+        }
+    }
+
+    /*
+     *  Opt 7. Method for list borrowings by reader
+     */
+    private void listBorrowingsbyReader() {
+        Scanner sc = new Scanner(System.in);// Initializing scanner
+        String opt;
+        Boolean keepgoing = true;//  Flag for menu
+
+        System.out.println("1 - Kardex");
+        System.out.println("2 - Only no returned books");
+        System.out.println("0 - Back to General Menu");
+        System.out.println();
+        
+        //  It will keep asking to the user for a valid input
+        while (keepgoing) {
+
+            //  Asking an input to the user
+            opt = sc.nextLine();
+            System.out.println();
+            switch (opt) {
+                case "1":
+                    borrowings.listKardex();
+                    keepgoing = false;
+                    break;
+                case "2":
+                    borrowings.listNoReturnedBorrowings();
+                    keepgoing = false;
+                    break;
+                case "0":
+                    keepgoing = false;
+                    break;
+                default:
+                    System.out.println("Please select an option from the menu!");
+                    break;
+            }
+        }
+
+    }
 }

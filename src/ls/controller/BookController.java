@@ -9,9 +9,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import ls.model.Book;
 import ls.utils.Sorting;
 import ls.utils.Searching;
+import ls.utils.tools;
 
 /**
  *
@@ -66,7 +68,7 @@ public class BookController {
      */
     public void displayBooks(ArrayList<Book> listBooks) {
         //  Printing Headers with a proper format
-        System.out.println(library_system_2020085.UserInterface.separator);
+        System.out.println(tools.separator);
         System.out.printf("%-10s", "BOOKID");
         System.out.printf("%-55s", "TITLE");
         System.out.println("AUTHOR");//  There is no need to format as it's the last field
@@ -99,7 +101,7 @@ public class BookController {
         }
         return arrayBooks;
     }
-    
+
     /*
      *  This method sort books by 2 fields of interest and display the results
      */
@@ -261,5 +263,92 @@ public class BookController {
 
         //  Now we return all books found list
         return tempB;
+    }
+
+    /*
+     *  This method validate if the given bookId is registered in the database
+     *  and return the book if it exists, if not return null
+     */
+    public Book getBook(String readerId) {
+        for (Book book : books) {
+            if (book.getBookId().equals(readerId)) {
+                return book;
+            }
+        }
+        return null;
+    }
+
+    /*
+     *  This method ask to the user a valid book, it returns a string array with bookId and bookTitle
+     *  in case user give up, it will return an empty array of Strings 
+     */
+    public String[] askToUserValidBook() {
+        String[] resultBook =  {"",""};;//  Set resulting array 
+
+        Book book;
+        Scanner sc = new Scanner(System.in);// Initializing scanner
+        String opt, bookId, bookTitle;
+        Boolean validbook = false;
+
+        //  Keep asking to the user a valid bookId
+        while (!validbook) {
+            //  Ask bookId to the user
+            bookId = String.valueOf(tools.getInt(sc, "Please insert ID of the book"));
+            //  Get book for bookId
+            book = getBook(bookId);
+            try {
+                //  Set bookTitle to show it further, if bookId is not valid
+                //  it will thrown a NullPointerException and ask user for a valid book
+                bookTitle = book.getTitle();
+                //  Set validBook as true to not ask book again 
+                validbook = true;
+
+                //  Set resulting array 
+                resultBook[0] = bookId;
+                resultBook[1] = bookTitle;
+            }//  If bookId is not valid, it offers searching options to the user 
+            catch (NullPointerException e) {
+                System.out.println("Book's Id does not exist in our database!");
+                System.out.println("Would you like to search the book by title or author?");
+                System.out.println("1 - Yes, By Title");
+                System.out.println("2 - Yes, By Author");
+                System.out.println("0 - No, Back to General Menu");
+                System.out.println();
+
+                //  It will keep asking to the user for a valid input
+                Boolean keepgoing = true;
+                String target;
+                while (keepgoing) {
+                    //  Asking an input to the user
+                    opt = sc.nextLine();
+                    System.out.println();
+                    switch (opt) {
+                        case "1":
+                            //  Asking an input to the user
+                            target = tools.getString(sc, "Please insert Book's Title");
+                            searchBooks(true, target);
+                            System.out.println();
+                            keepgoing = false;
+                            break;
+                        case "2":
+                            //  Asking an input to the user
+                            target = tools.getString(sc, "Please insert Book's Author");
+                            searchBooks(false, target);
+                            System.out.println();
+                            keepgoing = false;
+                            break;
+                        case "0":
+                            keepgoing = false;
+                            validbook = true;
+                            break;
+                        default:
+                            System.out.println("Please select an option from the menu!");
+                            break;
+                    }
+                }
+
+            }
+        }
+        return resultBook;
     }
 }

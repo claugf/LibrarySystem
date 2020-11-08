@@ -9,10 +9,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import ls.model.Book;
 import ls.model.Reader;
 import ls.utils.Searching;
 import ls.utils.Sorting;
+import ls.utils.tools;
 
 /**
  *
@@ -67,7 +69,7 @@ public class ReaderController {
      */
     public void displayReaders(ArrayList<Reader> listReaders) {
         //  Printing Headers with a proper format
-        System.out.println(library_system_2020085.UserInterface.separator);
+        System.out.println(tools.separator);
         System.out.printf("%-10s", "READERID");
         System.out.printf("%-15s", "NAME");
         System.out.printf("%-15s", "SURNAME");
@@ -223,12 +225,12 @@ public class ReaderController {
             }
         } else {
             if (sortField == 2) {
-                // If there is finding, display results, if there is no findings, we search by title
+                // If there is finding, display results, if there is no findings, we search by Surname
                 if (!findings.isEmpty()) {
                     //  Print headers
                     System.out.println("----------------------------------READERS BY NAME----------------------------------");
                 } else {
-                    //  First sort BooksList by Title
+                    //  First sort ReadersList by Surname
                     sorting(3);
                     //  Searching by given target
                     findings = searching(3, target);
@@ -240,14 +242,13 @@ public class ReaderController {
                         System.out.println("Sorry! None reader was found with that criteria. Either by Name or Surname.");
                     }
                 }
-            }
-            else{
-                // If there is finding, display results, if there is no findings, we search by title
+            } else {
+                // If there is finding, display results, if there is no findings, we search by Name
                 if (!findings.isEmpty()) {
                     //  Print headers
                     System.out.println("----------------------------------READERS BY SURNAME----------------------------------");
                 } else {
-                    //  First sort BooksList by Title
+                    //  First sort BooksList by Name
                     sorting(2);
                     //  Searching by given target
                     findings = searching(2, target);
@@ -279,7 +280,7 @@ public class ReaderController {
         ArrayList<String> findings = Searching.linealSearch(arrayReaders, target);
         //  Declaring temporary array to fill it later with sorted array
         ArrayList<Reader> tempR = new ArrayList<>();
-        
+
         //  Going throught array of findings strings
         for (String finding : findings) {
             //  Going throught array of readers
@@ -318,5 +319,92 @@ public class ReaderController {
 
         //  Now we return all readers found list
         return tempR;
+    }
+
+    /*
+     *  This method validate if the given readerId is registered in the database
+     *  and return the reader if it exists, if not return null
+     */
+    public Reader getReader(String readerId) {
+        for (Reader reader : readers) {
+            if (reader.getReaderId().equals(readerId)) {
+                return reader;
+            }
+        }
+        return null;
+    }
+
+    /*
+     *  This method ask to the user a valid reader, it return a string array with readerId and readerName
+     *  in case user give up, it will return an empty array of Strings 
+     */
+    public String[] askToUserValidReader() {
+        String[] resultReader = {"",""};//  Set resulting array 
+        
+        Reader reader;
+        Scanner sc = new Scanner(System.in);// Initializing scanner
+        String opt, readerId, readerName;
+        Boolean validReader = false;
+
+        //  Keep asking to the user a valid readerId
+        while (!validReader) {
+            //  Ask readerId to the user
+            readerId = String.valueOf(tools.getInt(sc, "Please insert ID of the reader"));
+            //  Get reader for readerID
+            reader = getReader(readerId);
+            try {
+                //  Set readerName to show it further, if readerId is not valid
+                //  it will thrown a NullPointerException and ask user for a valid reader
+                readerName = reader.getName();
+                //  Set validReader as true to not ask reader again 
+                validReader = true;
+
+                //  Set resulting array 
+                resultReader[0] = readerId;
+                resultReader[1] = readerName;
+
+            } //  If readerId is not valid, it offers searching options to the user
+            catch (NullPointerException e) {
+                System.out.println("Reader's Id does not exist in our database!");
+                System.out.println("Would you like to search the reader by name or surname?");
+                System.out.println("1 - Yes, By Name");
+                System.out.println("2 - Yes, By Surname");
+                System.out.println("0 - No, Back to General Menu");
+                System.out.println();
+
+                //  It will keep asking to the user for a valid input
+                Boolean keepgoing = true;
+                String target;
+                while (keepgoing) {
+                    //  Asking an input to the user
+                    opt = sc.nextLine();
+                    System.out.println();
+                    switch (opt) {
+                        case "1":
+                            //  Asking an input to the user
+                            target = tools.getString(sc, "Please insert Reader's Name");
+                            searchReaders(2, target);
+                            System.out.println();
+                            keepgoing = false;
+                            break;
+                        case "2":
+                            //  Asking an input to the user
+                            target = tools.getString(sc, "Please insert Reader's Surname");
+                            searchReaders(3, target);
+                            System.out.println();
+                            keepgoing = false;
+                            break;
+                        case "0":
+                            keepgoing = false;
+                            validReader = true;
+                            break;
+                        default:
+                            System.out.println("Please select an option from the menu!");
+                            break;
+                    }
+                }
+            }
+        }
+        return resultReader;
     }
 }

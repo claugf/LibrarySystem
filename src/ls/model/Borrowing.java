@@ -5,20 +5,21 @@
  */
 package ls.model;
 
-import java.util.*;
+import java.time.LocalDate;
 
 /**
  *
  * @author claudialuizagonzalezferrufino
  */
 public class Borrowing {
-    private int borrowingId;
+
+    private String borrowingId;
     private String readerId;
     private String bookId;
-    private Date borrowingDate;
-    private Date returnDate;
+    private LocalDate borrowingDate;
+    private LocalDate returnDate;
 
-    public Borrowing(int borrowingId, String readerId, String bookId, Date borrowingDate, Date returnDate) {
+    public Borrowing(String borrowingId, String readerId, String bookId, LocalDate borrowingDate, LocalDate returnDate) {
         this.borrowingId = borrowingId;
         this.readerId = readerId;
         this.bookId = bookId;
@@ -26,11 +27,11 @@ public class Borrowing {
         this.returnDate = returnDate;
     }
 
-    public int getBorrowingId() {
+    public String getBorrowingId() {
         return borrowingId;
     }
 
-    public void setBorrowingId(int borrowingId) {
+    public void setBorrowingId(String borrowingId) {
         this.borrowingId = borrowingId;
     }
 
@@ -50,21 +51,25 @@ public class Borrowing {
         this.bookId = bookId;
     }
 
-    public Date getBorrowingDate() {
+    public LocalDate getBorrowingDate() {
         return borrowingDate;
     }
 
-    public void setBorrowingDate(Date borrowingDate) {
+    public void setBorrowingDate(LocalDate borrowingDate) {
         this.borrowingDate = borrowingDate;
     }
 
-    public Date getReturnDate() {
+    public LocalDate getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(Date returnDate) {
+    public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Borrowing{" + "borrowingId=" + borrowingId + ", readerId=" + readerId + ", bookId=" + bookId + ", borrowingDate=" + borrowingDate + ", returnDate=" + returnDate + '}';
+    }
+
 }
